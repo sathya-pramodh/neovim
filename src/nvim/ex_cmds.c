@@ -4804,3 +4804,8 @@ void ex_oldfiles(exarg_T *eap)
     }
   }
 }
+
+/// :restart command.
+void ex_restart(exarg_T *eap)
+{
+}

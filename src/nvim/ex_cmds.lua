@@ -2241,6 +2241,12 @@ M.cmds = {
     func = 'ex_resize',
   },
   {
+    command = 'restart',
+    flags = BANG,
+    addr_type = 'ADDR_NONE',
+    func = 'ex_restart',
+  },
+  {
     command = 'retab',
     flags = bit.bor(TRLBAR, RANGE, WHOLEFOLD, DFLALL, BANG, WORD1, CMDWIN, LOCK_OK, MODIFY),
     addr_type = 'ADDR_LINES',
