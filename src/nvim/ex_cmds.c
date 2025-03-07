@@ -92,6 +92,7 @@
 #include "nvim/state_defs.h"
 #include "nvim/strings.h"
 #include "nvim/terminal.h"
+#include "nvim/tui/tui.h"
 #include "nvim/types_defs.h"
 #include "nvim/ui.h"
 #include "nvim/ui_defs.h"
@@ -4803,9 +4804,4 @@ void ex_oldfiles(exarg_T *eap)
       xfree(s);
     }
   }
-}
-
-/// :restart command.
-void ex_restart(exarg_T *eap)
-{
 }

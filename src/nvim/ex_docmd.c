@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <uv.h>
 
 #include "auto/config.h"
@@ -23,6 +24,7 @@
 #include "nvim/buffer_defs.h"
 #include "nvim/change.h"
 #include "nvim/channel.h"
+#include "nvim/channel_defs.h"
 #include "nvim/charset.h"
 #include "nvim/cmdexpand.h"
 #include "nvim/cmdexpand_defs.h"
@@ -5622,6 +5624,36 @@ static void ex_resize(exarg_T *eap)
     }
     win_setheight_win(n, wp);
   }
+}
+
+/// :restart command.
+static void ex_restart(exarg_T *eap)
+{
+  // TODO(sathya-pramodh): Must add doc comments.
+  msg_clr_cmdline();
+  msg_start();
+  msg_puts("Restarting the server...");
+
+  // TODO(sathya-pramodh): Fix these msg_puts calls to be cleaner and more user-friendly.
+  const char *err;
+  if (!channel_close(STDIN_FILENO, kChannelPartRpc, &err)) {
+    msg_clr_cmdline();
+    msg_puts("Error closing the RPC channel: ");
+    msg_puts(err);
+    return;
+  }
+
+  // TODO(sathya-pramodh): Must destroy the connection in order to re-init with channel_from_stdio().
+
+  if (!channel_from_stdio(true, CALLBACK_READER_INIT, &err)) {
+    msg_clr_cmdline();
+    msg_puts("Error initializing new embed RPC channel: ");
+    msg_puts(err);
+    return;
+  }
+
+  msg_clr_cmdline();
+  msg_puts("Restarted");
 }
 
 /// ":find [+command] <file>" command.
